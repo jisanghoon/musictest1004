@@ -9,11 +9,10 @@ import { FileChooser, MediaPlugin } from 'ionic-native';
 })
 export class HomePage {
   nativepath: string;
-
   value;
   max;
-
   mediaTimer: any;
+  file;
   constructor(public navCtrl: NavController) {
 
   }
@@ -37,28 +36,38 @@ export class HomePage {
   audioplay() {
 
 
-    var pathalone = this.nativepath.substring(8);
-    const file = new MediaPlugin(pathalone, (status) => {
+    //var pathalone = this.nativepath.substring(8);
+    this.file = new MediaPlugin("http://1.222.240.74/1.mp3", (status) => {
 
     });
 
 
-    file.play();
+    this.file.play();
 
-setTimeout(()=>{
-  this.max=file.getDuration();
-  alert(this.max);
-},3000)
+    setTimeout(() => {
+      this.max = (this.file.getDuration()/1000*60) % 60
+      alert(this.max);
+    }, 700)
 
 
 
     setInterval(() => {
-      file.getCurrentPosition().then((curpos) => {
+      this.file.getCurrentPosition().then((curpos) => {
         console.log((curpos) + " sec");
-        this.value = curpos;
+        this.value = (curpos/1000*60) % 60;
       });
-      console.log(file.getDuration() + "테스트테스트");
+      console.log(this.file.getDuration() + "테스트테스트");
     })
+  }
+  musicPlay() {
+     
+    this.file.play();
+  }
+  musicPause() {
+    this.file.pause();
+  }
+  musicStop() {
+    this.file.stop();
   }
 
 }

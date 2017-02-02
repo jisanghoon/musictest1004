@@ -7,9 +7,16 @@
 </ion-header>
 
 <ion-content padding>
- <button ion-button (click)="filechooser()">click</button>
+  <button ion-button (click)="filechooser()">click</button>
+  <button ion-button (click)="musicPlay()">Play</button>
+  <button ion-button (click)="musicPause()">Pause</button>
+  <button ion-button (click)="musicStop()">Stop</button>
+
   <ion-item>
-    <ion-range [(ngModel)]="value" color="danger"></ion-range>
+    <ion-range [(ngModel)]="value" color="danger"[max]="max">
+      <ion-label range-left>{{value}}</ion-label>
+      <ion-label range-right>{{max}}</ion-label>
+    </ion-range>
   </ion-item>
 
 </ion-content>
